@@ -14,7 +14,8 @@ Atualmente possuo algumas certificações sobre a tecnologia, caso queira consul
 | :------:|:-----:| :------:| :-------:|
 | [1. O que é o Spring framework?](#springframework) | [2. Conceitos prévios?](#conceitos) 	| [3. Injeção de Dependência (ID)](#injecao) |  [4. Inversão de Controle (IOC)](#controle) | 
 | [5. Bean e JavaBean](#javabeans)| [6. Spring Framework Runtime](#springruntime) | [7. Injeção de Dependência no Spring](#injecaospring)  | [8. Injeção de Dependência no Spring - Declarações no XML](#declarandobeanXML) | 
-|[9. Utilização do Container](#utilcontainer)|[10. Configurações do XML](#configXML)|[11. Spring Expression Language - SpEL](#springel)|[]()|
+|[9. Utilização do Container](#utilcontainer)|[10. Configurações do XML](#configXML)|[11. Spring Expression Language - SpEL](#springel)|[12. Autowiring](#autowiring)|
+|[13. Anotações do Spring](#anotacoes)|[]()|[]()|[]()|
 
 <div id='springframework'/>
 
@@ -1153,6 +1154,65 @@ Como exemplo, vamos utilizar um bean que busca os arquivos dentro do diretório 
        
 </details>
 
+<div id='autowiring'/>
+
+## 12. Autowiring
+
+<details>
+
+<summary> Conteúdo: </summary>
+
+### Introdução
+
+Visando aumentar a produtividade, podemos configurar o container através do autowiring. O autowiring permite automatizar a injeção de dependência, retirando a necessidade de configuração manual da mesma.
+
+### Autowiring
+
+Se trata da injeção automática de dependendências, possibilitando que o container descubra em tempo de execução, sem necessidade de instrução do desenvolvedor, quais dependências devem ser injetadas em cada bean.
+
+#### Autowiring no XML
+
+Um exemplo de uso de autowiring em todos os beans declarados em um arquivo XML:
+
+```xml
+<beans default-autowire="byType" xmlns="..." xmlns:xsi="..." xsi:schemaLocation="...">
+       <bean class="br.com.exemplo.Exemplo">
+              <property name="metodo" value="parametro"/>
+       </bean>
+       
+       <bean class="br.com.exemplo.ClasseExemplo1"/>
+       <bean class="br.com.exemplo.ClasseExemplo2"/>
+       <bean class="br.com.exemplo.ClasseExemplo3"/>
+</beans>
+```
+
+Observação: dado que o container que descobre as dependências, não é necessário nomear os nossos beans.
+
+#### Valores do autowire
+
+Os valores que o autowire aceita são:
+
+* no : este é o valor padrão do spring, e significa que o autowiring não será adotado;
+* byType : uma dependência será injetada caso seja encontrada APENAS uma definição do bean que possua um tipo compatível;
+* byName : uma dependência será injetada baseado no nome, ou seja, serão buscados beans que tenham o mesmo nome que a propriedade que receberá a injeção;
+* constructor : o container irá buscar por construtores não padrão para executar a injeção em vez de propriedades.
+* autodetect : o container tenta injetar através de uma injeção do tipo construtor, caso não seja encontrado um construtor no bean, será adotada a injeção byType.
+
+### Ambiguidade
+
+Como esperado, um dos maiores problemas encontrados no autowiring é a ambiguidade. É fundamental que não exista ambiguidade para que a injeção automática funcione corretamente.
+
+</details>
+
+<div id='anotacoes'/>
+
+## 13. Anotações do Spring
+
+<details>
+
+<summary> Conteúdo: </summary>
+
+</details>
 
 ## Minhas certificações sobre o assunto
 [Java Servlet: programação web Java]()
