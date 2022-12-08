@@ -1166,6 +1166,8 @@ Como exemplo, vamos utilizar um bean que busca os arquivos dentro do diretório 
 
 Visando aumentar a produtividade, podemos configurar o container através do autowiring. O autowiring permite automatizar a injeção de dependência, retirando a necessidade de configuração manual da mesma.
 
+Cabe ressaltar que o uso do autowiring, sem o uso de anotações, é recomendado somente em projetos pequenos ou projetos com convenções rígidas.
+
 ### Autowiring
 
 Se trata da injeção automática de dependendências, possibilitando que o container descubra em tempo de execução, sem necessidade de instrução do desenvolvedor, quais dependências devem ser injetadas em cada bean.
@@ -1201,6 +1203,29 @@ Os valores que o autowire aceita são:
 ### Ambiguidade
 
 Como esperado, um dos maiores problemas encontrados no autowiring é a ambiguidade. É fundamental que não exista ambiguidade para que a injeção automática funcione corretamente.
+
+A maneira mais eficaz para solucionar a ambiguidade é instruir o container quais beans não devem ser injetados automaticamente. Para instruir ao container o bean que deve ser ignorado na injeção automatica é necessário igual o exemplo abaixo:
+
+```xml
+<bean id="exemplo" class="br.com.exemplo.ClasseExemplo" autowire-candidate="false">
+       <property ... >
+</bean>
+```
+
+### Vantagens do autowire
+
+Como principais vantagens do autowire podemos destacar:
+
+* Redução da configuração;
+* Evolução natural e automática da nossa configuração;
+
+
+### Limitações do autowire
+
+Como principais limitações do autowire podemos destacar:
+
+* Troca do explícito pelo implícito, pois dellegamos ao container como deve ser feita a injeção de dependências;
+* Injeção automática de propriedades primitivas, listas e strings. É uma desvantagem pois é necessário que o desenvolvedor defina seus valores explicitamente sempre.
 
 </details>
 
