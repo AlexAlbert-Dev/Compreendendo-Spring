@@ -1297,7 +1297,89 @@ Podemos fazer uso das anotações do JSR-250, onde a anotação mais popular par
 
 ### Encontrando os beans
 
+Para instruir o container de que ele deve buscar as definições de nossos beans varendo o classpath do sistema em busca de classes, que possam ser reconhecidas como beans, é necessário adicionar a tag ```<context:component-scan/>```. Um exemplo de código abaixo:
+
+```xml
+<beans xmlns="..." xmlns:xsi="..." xmlns:context="..." xsi:schemaLocation="....">
+
+       <context:annotation-config/>
+       <context:component-scan base-package="br.com.exemplo"/>
+
+       <bean id="bean1" class="br.com.exemplo.Bean1">
+              <property name="..." value="..."/>
+       </bean>
+       <bean id="bean1" class="br.com.exemplo.Bean2"/>
+       <bean id="bean2" class="br.com.exemplo.Bean3" />
+</beans>
+```
+
+Tal tag possui o parâmetro obrigatório *base-package*, onde seu valor é o nome do pacote que possui todas as classes que implementam os beans do nosso sistema.
+
+#### Estereótipo do Spring
+
+O conceito de estereótipo: uma classe só é reconhecida pelo Spring como uma configuração de bean, quando a mesma possui uma anotação que defina o tipo de bean que esta classe está representando.
+
+A existência de múltiplos estereótipos permite que as equipes de desenvolvimento possam adicionar comportamentos específicos a cada tipo de bean, maximizando a flexibilidade do Spring.
+
+##### Component
+
+O tipo mais básico de bean entre os componentes é identificado pela anotação ```@Component```, sendo possível, mas não obrigatório, nomear nosso bean indicando sua identificação. Um exemplo de uso da anotação:
+
+```java
+@Component("exemplo")
+public class Exemplo {
+       ...
+}
+```
+
+##### Repository
+
+Este estereótipo faz referência as classes DAOs.
+
+##### Controller
+
+Este estereótipo faz referência as classes de controladores do Spring MVC.
+
+##### Service
+
+Este estereótipo faz rerferência as classes responsáveis por um controle transacional mais fino.
+
 ### Filtrando componentes
+
+Existe situações em que o carregamento de todas as definições de beans não é benéfico, e para essas situações que existe as tags ```<context:include-filter>``` e ```<context:exclude-filter```, onde definem quais definições devem ser incluídas e ignoradas.
+
+Em ambas as tags existe dois parâmetros obrigatórios:
+
+* *type* : indica qual tipo de expressão é utilizada para encontrar os componentes no classpath do sistema;
+* *expression* : define a expressão aplicada na filtragem.
+
+Dentro dos tipos de expressões *types* temos:
+
+* *annotation* : no *expression* deve ser inserido o nome completo do estereótipo que será incluído no filtro;
+* *regex* : no *expression* deve ser inserido uma expressão regular que identifique o tipo de classe que entrará na filtragem;
+* *assignable* : define qual classe base ou interface será implementada pelas classes anotadas;
+* *aspectj* : no *expression* deve ser inserido uma expressão no formato AspectJ para identificar os componentes;
+* *custom* : permite implementar filtros customizados na varredura do classpath, ou seja, classes que implementem a interface *org.springframework.core.type.TypeFilter*.
+
+A seguir um código utilizando alguns dos tipos de filtros:
+```xml
+<context:annotation-config/>
+       
+<context:component-scan base-package="br.com.exemplo"/>
+       <!-- Busca em todas as classes com app no início do nome -->
+       <context:include-filter type="regex" expression="app*"/>
+
+       <!-- Excluí todos os componentes do estereótipo Controller -->
+       <context:exclude-filter type="annotation"
+       expression="org.springframework.stereotype.Controller"/>
+</context:component-scan>
+       
+<context:component-scan base-package="br.com.exemplo">
+       <!-- Busca apenas nas classes com classe mãe app -->
+       <context:include-filter type="assignable"
+       expression="br.com.exemplo.app"/>
+</context:component-scan>
+```
 
 ### Definindo os escopos
 
