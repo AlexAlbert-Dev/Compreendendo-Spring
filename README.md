@@ -1237,6 +1237,74 @@ Como principais limitações do autowire podemos destacar:
 
 <summary> Conteúdo: </summary>
 
+### Introdução
+       
+O recurso mais importante do Spring, foi adicionado na versão 2.0 do Spring, e é o recurso que permite uma redução substancial, para não dizer completa, da necessidade de configurações via XML. O Spring tem suporte para JSR-330 e JSR-250.
+
+### Definindo os pontos de injeção
+
+Para definir os pontos de injeção, inicialmente é necessário a adição do *namespace context* ao XML. Ficando algo parecido com:
+
+```xml
+<beans xmlns="..." xmlns:xsi="..." xmlns:context="..." xsi:schemaLocation="....">
+
+       <context:annotation-config/>
+       
+       <bean id="bean1" class="br.com.exemplo.Bean1">
+              <property name="..." value="..."/>
+       </bean>
+       <bean id="bean1" class="br.com.exemplo.Bean2"/>
+       <bean id="bean2" class="br.com.exemplo.Bean3" />
+</beans>
+```
+
+A tag ```<context:annotation-config/>``` indica ao container que a configuração será realizada via anotações. 
+
+*Observação*: Pode-se utilizar todas as definições de pontos de injeção, descritas abaixo, simultaneamente em uma mesma classe.
+
+#### Definindo com Spring
+
+As duas anotações utilizadas para definir um ponto de injeção abaixo.
+
+* ```@Required```: Utilizável somente em métodos e setters. Serve para instruir o container sobre a obrigatoriedadde da dependência.
+Exemplo: 
+```java
+@Required @Autowired
+public void foo (Bar bar) {...}
+```
+
+* ```@Autowired```: Utilizável em métodos, atributos e construtores (somente um construtor por classe). Serve para indicar ao container onde a injeção automática deve ser aplicada. Exemplo:
+```java
+@Autowired(required=true)
+public void foo (Bar bar) {...}
+```
+
+#### Definindo com JSR-330
+
+Podemos fazer uso das anotações do JSR-330, tendo como principal vantagem a ausência de dependência direta ao Spring. A anotação mais popular para este fim é a ```@Inject```, e ela não possui atributo *required*. Esta anotação pode ser utilizada em métodos, construtores (um por classe) e atributos.
+
+Dado que o seu código fonte não vêm com o Spring, é necessário acrescentar a biblioteca necessária ao classpath do projeto. O modo como isto é realizado depende de qual software de gerenciamento está a utilizar (maven, gradle, etc.).
+
+Um exemplo do uso da anotação:
+```java
+@Inject
+public void foo (Bar bar) {...}
+```
+
+#### Definindo com JSR-250
+
+Podemos fazer uso das anotações do JSR-250, onde a anotação mais popular para este fim é a ```@Resource```, funcionamento de modo idêntico a ```@Inject```.
+
+### Encontrando os beans
+
+### Filtrando componentes
+
+### Definindo os escopos
+
+### Ciclo de vida
+
+### Alterando o número de candidatos
+
 </details>
 
 ## Minhas certificações sobre o assunto
