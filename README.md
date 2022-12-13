@@ -1383,9 +1383,61 @@ A seguir um código utilizando alguns dos tipos de filtros:
 
 ### Definindo os escopos
 
+Para definir os escopos via anotações o Spring provê a anotação ```@Scope```, onde é possível inserir o parâmetro o nome do escopo (singleton, prototype etc.). Por padrão, o parâmetro da anotação é singleton.
+
+A seguir, um exemplo de uso da anotação:
+
+```java
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+       
+@Scope("singleton")
+@Component
+public class Foo {...}
+```
+
 ### Ciclo de vida
 
-### Alterando o número de candidatos
+Para permitir os métodos de callback após a injeção e antes da destruição, é utilizado duas anotações definidas pela JSR-250: ```@PostConstruct``` e ```@PreDestroy```.
+
+A seguir, um exemplo de uso das anotações:
+
+```java
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy; 
+import javax.inject.Named; 
+
+@Named
+public class Foo extends Bar{
+       @PostConstruct
+       public void init() {
+              System.out.println("Bean iniciado");
+       }
+       
+       @PreDestroy
+       public void destroy() {
+              System.out.println("Bean finalizado");
+       }
+}
+```
+
+### Resolvendo o problema de ambiguidade
+
+Uma solução para resolver tal problema é a adoção de qualificadores, que fornecem uma melhor identificação aos beans. O Spring provê a anotação ```@Qualifier``` para indicar ao container qual dependência deverá ser injetada em determinado atributo, parâmetro do construtor ou método.
+
+A seguir, um exemplo de uso da anotação:
+
+```java
+import org.springframework.beans.factory.annotation.Qualifier;
+
+@Named("bean1")
+public class Foo {
+       @Qualifier("bean2")
+       private Bar bar;
+}
+```
+
+O valor atribuído a anotação ```@Qualifier``` é o identificador que vai ajudar o container na escolha da dependência que deverá ser injetada. Por convenção, esse valor corresponde pelo nome do bean que vai ser injetado.
 
 </details>
 
