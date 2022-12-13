@@ -15,7 +15,7 @@ Atualmente possuo algumas certificações sobre a tecnologia, caso queira consul
 | [1. O que é o Spring framework?](#springframework) | [2. Conceitos prévios?](#conceitos) 	| [3. Injeção de Dependência (ID)](#injecao) |  [4. Inversão de Controle (IOC)](#controle) | 
 | [5. Bean e JavaBean](#javabeans)| [6. Spring Framework Runtime](#springruntime) | [7. Injeção de Dependência no Spring](#injecaospring)  | [8. Injeção de Dependência no Spring - Declarações no XML](#declarandobeanXML) | 
 |[9. Utilização do Container](#utilcontainer)|[10. Configurações do XML](#configXML)|[11. Spring Expression Language - SpEL](#springel)|[12. Autowiring](#autowiring)|
-|[13. Anotações do Spring](#anotacoes)|[]()|[]()|[]()|
+|[13. Anotações do Spring](#anotacoes)|[14. Configuração Programática](#configprog)|[]()|[]()|
 
 <div id='springframework'/>
 
@@ -1440,6 +1440,76 @@ public class Foo {
 O valor atribuído a anotação ```@Qualifier``` é o identificador que vai ajudar o container na escolha da dependência que deverá ser injetada. Por convenção, esse valor corresponde pelo nome do bean que vai ser injetado.
 
 </details>
+       
+<div id='configprog'/>
 
+## 14. Configuração Programática
+
+<details>
+
+<summary> Conteúdo: </summary>
+
+### Introdução
+
+Desde a versão 3.0 do Spring temos a possibilidade de configurar o container unicamente com código Java, e portanto, eliminar totalmente a necessidade do uso da configuração XML.
+
+### Anotação @Configuration
+
+Nosso ponto de partida na configuração programática com Java é uma ou mais classes que possuam a anotação ```@Configuration```, que é um estereótipo provido pelo Spring.
+
+Para o container, toda classe com essa anotação é um bean responsável por armazenar uma ou mais definições de beans. Seu uso é igual ao de qualquer outro estereótipo.
+
+A seguir, exemplo de uso da anotação:
+
+```java
+@Configuration
+public class Exemplo1 {...}
+
+@Configuration("exemplo2")
+public class Exemplo2 {...}
+```
+
+### Anotação @Bean
+
+A anotação ```@Bean``` é equivalente a tag ```<bean>```, e portanto, deve ser utilizado somente no interior de classes com a anotação ```@Configuration```.
+
+A seguir, um exemplo de uso da anotação:
+
+```java
+@Configuration
+public class Exemplo1 {
+       @Bean
+       public Foo foo() {
+              return new foo();
+       }
+
+       @Bean(name={"bar1","barOne"})
+       public Bar bar() {
+              return new bar();
+       }
+
+       @Bean(name="foobar")
+       public DataSource getDataSource() {
+                     DataSource ds = null;
+                     GregorianCalendar data = new GregorianCalendar();
+                     if (data.get(GregorianCalendar.HOUR_OF_DAY) < 13)
+                            ds = new DataSourceUsuarios(); 
+                     else
+                            ds = new DataSource();
+              return ds;
+       }
+}
+```
+
+### Ciclo de vida
+
+### Escopo
+
+### Injetando dependências
+
+### Como excluir o uso do XML
+
+</details>
+       
 ## Minhas certificações sobre o assunto
 [Java Servlet: programação web Java]()
