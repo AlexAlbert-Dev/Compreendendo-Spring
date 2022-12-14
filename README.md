@@ -1503,9 +1503,34 @@ public class Exemplo1 {
 
 ### Ciclo de vida
 
+Para realizar a configuração das callback a anotação ```@Bean``` possui dois atributos opcionais que permitem a configuração das callbacks. Tais atributos são *initMethod* e *destroyMethod*, e devem receber como valor o nome do método a ser executado.
+
+A seguir, um exemplo prático da utilização do ciclo de vida:
+
+```java
+@Bean(initMethod="inicio", destroyMethod="fim")
+public Foo foo() {
+       return new Foo();
+}
+``` 
+
 ### Escopo
 
+É possível utilizar escopos, para isso basta adicionar a anotação ```@Scope```, sendo que seu uso é exatamente igual ao dito acima.
+
+A seguir, um exemplo de uso de escopo em um bean:
+
+```java
+@Scope("request")
+@Bean(initMethod="inicio", destroyMethod="fim")
+public Foo foo() {
+       return new Foo();
+}
+```
+
 ### Injetando dependências
+
+
 
 ### Como excluir o uso do XML
 
