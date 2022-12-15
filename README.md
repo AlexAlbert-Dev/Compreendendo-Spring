@@ -1530,6 +1530,53 @@ public Foo foo() {
 
 ### Injetando dependências
 
+#### Comportamento Específico
+
+Quando se programa usando uma configuração baseada em anotações, que na realidade é o autowiring baseado no tipo, não é necessário se preocupar com a injeção de dependência. No entanto, quando se configura baseado em Java é importante ter em mente que: dado um retorno do ```@Bean``` o container vai injetar todas as dependências desse objeto. 
+
+Um exemplo de confusão que pode acontecer:
+
+```java
+@Configuration
+public class Exemplo {
+       @Bean
+       public Data data() { return new Data(); }
+
+       @Bean
+       public Arquivo arquivo() { return new Arquivo(); }
+
+       @Bean
+       public Arquivo arquivoData() {
+              Arquivo arquivo = new Arquivo();
+              arquivo.setData(new Data());
+              return arquivo;
+       }
+}
+```
+
+Normalmente em Java, sem utilizar nenhum framework, o método ```arquivoData()``` receberia uma instância de Data diferente do utilizado pelo método ```data()```. No entanto, no caso do Spring, uma vez obtida uma instância do bean, este o injeta como dependência, logo é o bean retornado pelo método ```data()```.
+
+#### Evitando Comportamento Específico
+
+Um modo de evitar este comportamento é não utilizar um setter, que irá injetar a dependência apenas pelo construtor. Em vez disso, podemos injetar uma dependência na classe que contém a anotação ```@Configuration```, pois ela em si é um bean e em seguida reaproveitar a dependência nas definições de beans que a classe contenha.
+
+Aplicando esta solução no código acima, teriamos:
+
+```java
+@Configuration
+public class Exemplo {
+       @Autowired
+       private Data data;
+
+       @Bean
+       public Arquivo arquivoData() {
+              Arquivo arquivo = new Arquivo();
+              arquivo.setData(data);
+              return arquivo;
+       }
+}
+```
+                                                                      
 
 
 ### Como excluir o uso do XML
