@@ -1576,10 +1576,85 @@ public class Exemplo {
        }
 }
 ```
-                                                                      
 
+### Excluindo o uso do XML
 
-### Como excluir o uso do XML
+para substituir 100% o uso de configuração via XML é necessário a implementação do *ApplicationContext* que chamamos de *AnnotationConfigApplicationContext*. Esta classe vai receber como parâmetro as classes que possuam definições de beans.
+
+Existem diversas formas de instanciar o *ApplicationContext*, sendo as principais:
+
+* Instanciando com apenas uma classe anotada:
+
+```java
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+...
+       AnnotationConfigApplicationContext context;
+       context = new AnnotationConfigApplicationContext(Exemplo.class);
+````
+
+* Instanciando uma lista de classes anotadas:
+
+```java
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+...
+       AnnotationConfigApplicationContext context;
+       context = new AnnotationConfigApplicationContext(Exemplo.class, Exemplo2.class);  
+```
+
+* Instanciando um pacote base para buscar definições de beans:
+
+```java
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+...
+       AnnotationConfigApplicationContext context;
+       // Instanciando um pacote base para buscar definições de beans
+       context = new AnnotationConfigApplicationContext("br.com.pacoteComDefinicoes"); 
+```
+
+* Instanciando mais de um pacote base:
+
+```java
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+...
+       AnnotationConfigApplicationContext context;
+       context = new AnnotationConfigApplicationContext("br.com.pacoteComDefinicoes", "br.com.pacoteComDefinicoes2");
+```
+
+### Método *register* do ApplicationContext
+
+Somente com o uso dos construtores não é possível criar filtros para incluir ou não no container, para alcançarmos essa capacidade é necessário utilizar o método register, que recebe como parâmetro as classes anotadas.
+
+Um detalhe importante deste método: após sua utilização, é recomendado usar *refresh()*, pois é ele quem irá indicar a necessidade de atualizar as definições internas de beans do container.
+
+A seguir, um exemplo de uso do método register:
+
+```java
+       context = new AnnotationConfigApplicationContext();
+
+       if (condição) 
+              context.register(Exemplo1.class);
+       else   
+              context.register(Exemplo2.class);
+       
+       context.register(Exemplo3.class);
+       context.refresh();
+```
+
+### Método *scan* do ApplicationContext
+
+O método scan, assim como o método register, tem como papel indicar ao container onde serão buscadas as classes anotadas a serem incluídas no container. No entanto, o método *scan* recebe como parâmetro uma lista de pacotes base.
+
+A seguir, um exemplo de uso do método scan:
+
+```java
+       context = new AnnotationConfigApplicationContext();
+
+       if (condição) 
+              context.scan("br.com.pacote1");
+       else   
+              context.register("br.com.pacote2", "br.com.pacote3");
+       context.refresh();
+```
 
 </details>
        
