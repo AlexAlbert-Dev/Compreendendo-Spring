@@ -7,7 +7,7 @@ url:
 plugins:
   - jekyll-relative-links
   - jekyll-remote-theme
-remote_theme: A boilerplate/starter theme
+remote_theme: pages-themes/hacker@v0.2.0
 markdown:
   GFM
 syntax_highlighter: 
