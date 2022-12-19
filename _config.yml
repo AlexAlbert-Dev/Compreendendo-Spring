@@ -7,7 +7,7 @@ url:
 plugins:
   - jekyll-relative-links
   - jekyll-remote-theme
-theme: minima
+remote_theme: pages-themes/minimal@v0.2.0
 markdown:
   GFM
 syntax_highlighter: 
