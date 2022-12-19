@@ -1,5 +1,13 @@
+name:
+  Alex Albert Desenvolvedor
+description:
+  Blog pessoal de estudos
+url:
+  https://alexalbert-dev.github.io/Compreendendo-Spring/
 plugins:
   - jekyll-relative-links
+markdown:
+  kramdown
 relative_links:
   enabled: true
   collections: true
