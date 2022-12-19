@@ -21,12 +21,11 @@ Atualmente possuo algumas certificações sobre a tecnologia, caso queira consul
 
 ## 1. O que é o Spring framework
 <details>
-
 <summary> Conteúdo: </summary>
-
 É um framework Java com o objetivo de facilitar o desenvolvimento de aplicações. Para isso, o framework explora os conceitos de inversão de controle (IoC) e injeção de dependências (ID). Portanto, ao adotá-lo, temos uma tecnologia que não somente fornece os recursos necessários à grande parte das aplicações, como módulos para persistência de dadoos, integração, segurança, testes etc. como também um conceito que permite criar soluções com menos acoplamento e mais coesão.
 
 </details>
+
 
 <div id='conceitos'/>
 
