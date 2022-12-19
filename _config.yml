@@ -8,6 +8,8 @@ plugins:
   - jekyll-relative-links
 markdown:
   kramdown
+theme:
+  midnight
 relative_links:
   enabled: true
   collections: true
