@@ -7,7 +7,7 @@ url:
 plugins:
   - jekyll-relative-links
   - jekyll-remote-theme
-remote_theme: pages-themes/leap-day@v0.2.0
+remote_theme: A boilerplate/starter theme
 markdown:
   GFM
 syntax_highlighter: 
