@@ -15,7 +15,7 @@ Atualmente possuo algumas certificações sobre a tecnologia, caso queira consul
 | [1. O que é o Spring framework?](#springframework) | [2. Conceitos prévios?](#conceitos) 	| [3. Injeção de Dependência (ID)](#injecao) |  [4. Inversão de Controle (IOC)](#controle) | 
 | [5. Bean e JavaBean](#javabeans)| [6. Spring Framework Runtime](#springruntime) | [7. Injeção de Dependência no Spring](#injecaospring)  | [8. Injeção de Dependência no Spring - Declarações no XML](#declarandobeanXML) | 
 |[9. Utilização do Container](#utilcontainer)|[10. Configurações do XML](#configXML)|[11. Spring Expression Language - SpEL](#springel)|[12. Autowiring](#autowiring)|
-|[13. Anotações do Spring](#anotacoes)|[14. Configuração Programática](#configprog)|[]()|[]()|
+|[13. Anotações do Spring](#anotacoes)|[14. Configuração Programática](#configprog)|[15. Programação Orientada a Aspectos (AOP)](#aop)|[]()|
 
 <div id='springframework'/>
 
@@ -1656,6 +1656,44 @@ A seguir, um exemplo de uso do método scan:
 ```
 
 </details>
-       
+
+<div id='aop'/>
+
+## 15. Programação Orientada a Aspectos (AOP)
+
+<details>
+
+<summary> Conteúdo: </summary>
+
+### AOP
+
+O uso correto de AOP permite implementar aspectos sem que os mesmos tenham que ser adicionados as dependências ao código fonte.
+
+#### Principais conceitos :
+
+* joinpoints: eventos de interesse do fluxo de execução do sistema, ou seja, quando a execução para por um joinpoint o aspecto vai agir naquele local. ex: inovação de métodos, alteração de atributos etc...
+* pointcuts: representam um conjunto de joinpoint pois diminuem muito a taxa de ocorrências de joinpoins de um mesmo tipo
+* advices: são procedimentos realizados ao pointcuts ser acionado; podem ser executados antes, depois ou em substituição de um jointpoint, ou seja, se tornam a implementação dos interesses transversãi
+
+### Interesses transversais
+
+Para compreender os interesses transversais é necessário compreender a construção do projeto de um sistema, que é composto de diversos interesses (chamados de concerns). Na programação orientada a objetos (POO) o modelo de abstração trabalha com classes. Dessa forma, o objetivo é separar os interesses em classes distintas, algo impossível as vezes, e esses interesses que não podem ser modularizados que chamamos de interesses transversais.
+
+Exemplos:
+
+* Persistência de objetos;
+* Segurança de acesso;
+* Acesso concorrente;
+* Gerenciamento de transações.
+
+Portanto, AOP foi desenvolvida para resolver os problemas de implementação desses interesses transversais em sistemas modelados com orientação a objetos. Além disso, esses interesses são separados em unidades que chamamos de aspectos.
+
+### Identificando interesses transversais
+
+
+
+</details>   
+
 ## Minhas certificações sobre o assunto
+
 [Java Servlet: programação web Java]()
